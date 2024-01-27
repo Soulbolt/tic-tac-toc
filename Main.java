@@ -30,13 +30,13 @@ public class Main {
         boolean gameOn = true;
 
         if ((int)coinFlipResult[2] == 1) {
-            System.out.println("Coin Landed " + coinFlipResult[0] +"!");
+            System.out.println("Coin Landed on " + coinFlipResult[0] +"!");
             System.out.println("PlayerOne wins first turn!");
-            board.isGameOn(gameOn, playerOne);
+            board.isGameOn(gameOn, playerOne, playerTwo);
         } else {
-            System.out.println("Coin Landed " + coinFlipResult[0] +"!");
+            System.out.println("Coin Landed on " + coinFlipResult[0] +"!");
             System.out.println("PlayerTwo wins first turn!");
-            board.isGameOn(gameOn, playerTwo);
+            board.isGameOn(gameOn, playerOne, playerTwo);
         }
 
       

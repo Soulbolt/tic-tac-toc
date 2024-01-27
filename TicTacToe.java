@@ -1,32 +1,21 @@
-import java.lang.reflect.Array;
 import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
     Scanner scan = new Scanner(System.in);
-    /*
-     * Method to create a 3x3 matrix as a game board with "_" values.
-     */
-    public String[] gameBoard() {
-    
-        String board[] = new String[9];
+    static String[] board;
 
-        for (int i = 0; i < 9; i++){
-            for (int j = 0; j < 9; j++) {
-                board[i] = "_";
-            }
-        }  
-
-        //Print the matrix in a readable format
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++){
-                System.out.print(board[i] + " ");
-            }
-            System.out.println();
-        }
-
-        return board;
+    static void  generateBoard() { 
+        System.out.println(
+            "      |***|***|***|\r\n" + //
+            "      | " + board[0] + " | " +board[1] + " | " + board[2] + " |\r \n" + //
+            "      |***-***-***|\r\n" + //
+            "      | " + board[3] + " | " + board[4] + " | " + board[5] + " |\r\n" + //
+            "      |***-***-***|\r\n" + //
+            "      | " + board[6] + " | " + board[7] + " | " + board[8] + " |\r\n" + //
+            "      |***|***|***| ");
     }
+
     /**
      * Function tha takes user's choice to be matched against a random number of 0-1 where "heads" = 0 and "tails" = 1.
      * Based on a coinFLip silumalation conditions results, a response is then returned
@@ -56,17 +45,22 @@ public class TicTacToe {
         return wonCoinFlip;
     }
 
-    public boolean isGameOn(boolean isGameOn, String playerSymbol) {
-        String gameBoardLayout = CONSTANT.GAMEBOARD_LAYOUT;
-        String[] board = gameBoard();
-        System.out.println(gameBoardLayout);
+    public boolean isGameOn(boolean isGameOn, String playerOneSymbol, String playerTwoSymbol) {
+        board = new String[9];
+
+        for (int i = 0; i < 9; i++) {
+            board[i] = String.valueOf(i + 1);
+        }
+        generateBoard();
         while (isGameOn) {
-            System.out.println("Please enter a number from the board layout displayed above to insert your " + playerSymbol + " symbol.");
+            System.out.println("Please enter a number from the board layout displayed above to insert your " + playerOneSymbol + " symbol.");
             int playerA = scan.nextInt();
-            board[playerA] = playerSymbol;
-            System.out.println("Please enter a number from the board layout displayed above to insert your " + playerSymbol + " symbol.");
+            board[playerA - 1] = playerOneSymbol;
+            generateBoard();
+            System.out.println("Please enter a number from the board layout displayed above to insert your " + playerTwoSymbol + " symbol.");
             int playerB = scan.nextInt();
-            board[playerB] = playerSymbol;
+            board[playerB - 1] = playerTwoSymbol;
+            generateBoard();
         }
         return false;
     }
