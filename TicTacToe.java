@@ -25,7 +25,7 @@ public class TicTacToe {
      * Function tha takes user's choice to be matched against a random number of 0-1 where "heads" = 0 and "tails" = 1.
      * Based on a coinFLip silumalation conditions results, a response is then returned
      * @param playerChoice (String)
-     * @return wonCoinFLip (boolean)
+     * @return wonCoinFLip (Array Object)
      */
     public Object[] coinFlip(String playerChoice) {
         Random rand = new Random();
@@ -50,6 +50,15 @@ public class TicTacToe {
         return wonCoinFlip;
     }
 
+    /**
+     * Function: takes 2 String parameters to determine players symbols. Renders game board to provide visual aid to help with slot selection.
+     * Uses a while loop on winner = null. Prompts for players slot selection, adds it to the respective slot on the board and renders it.
+     * Assigns winner var to checkWinner() call then call on checkNull(). If statements to verify that winner != null and break loop to declare
+     * winner or draw respectively.
+     * @param playerOneSymbol (String)
+     * @param playerTwoSymbol (String)
+     * @return (boolean)
+     */
     public boolean isGameOn(String playerOneSymbol, String playerTwoSymbol) {
         board = new String[9];
         String winner = null;
@@ -85,6 +94,12 @@ public class TicTacToe {
         return false;
     }
 
+    /**
+     * Function: Takes 1 parameter and catches if the value is null. If value is not null, it prints out corresponding message
+     * of declaring a winner or draw based on the winner string value.
+     * @param winner (String)
+     * @return (String)
+     */
     public String checkNull(String winner) {
                     try {
                 if (winner.equalsIgnoreCase("draw")) {
@@ -100,6 +115,11 @@ public class TicTacToe {
             return winner;
     }
 
+    /**
+     * Function: iterates thorugh 8 conditional cases to verify is there is a tic tac toe (Three consecutive symbols)
+     *  e. x."XXX" or "OOO", to return if "X" or "O" is the winner. If neither and all slots have been filled. returns "draw"
+     * @return (String)
+     */
     public String checkWinner() {
         for (int i = 0; i < 8; i++) {
             String line = null;
