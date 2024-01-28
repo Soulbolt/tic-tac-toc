@@ -1,10 +1,15 @@
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
     Scanner scan = new Scanner(System.in);
     static String[] board;
-
+    
+    /**
+     * 
+     * Generattes tic tac toe gameboard layout for 1-9 slots (3x3).
+     */
     static void  generateBoard() { 
         System.out.println(
             "      |***|***|***|\r\n" + //
@@ -45,29 +50,106 @@ public class TicTacToe {
         return wonCoinFlip;
     }
 
-    public boolean isGameOn(boolean isGameOn, String playerOneSymbol, String playerTwoSymbol) {
+    public boolean isGameOn(String playerOneSymbol, String playerTwoSymbol) {
         board = new String[9];
-
+        String winner = null;
         for (int i = 0; i < 9; i++) {
             board[i] = String.valueOf(i + 1);
         }
+
         generateBoard();
-        while (isGameOn) {
-            System.out.println("Please enter a number from the board layout displayed above to insert your " + playerOneSymbol + " symbol.");
-            int playerA = scan.nextInt();
-            board[playerA - 1] = playerOneSymbol;
-            generateBoard();
-            System.out.println("Please enter a number from the board layout displayed above to insert your " + playerTwoSymbol + " symbol.");
-            int playerB = scan.nextInt();
-            board[playerB - 1] = playerTwoSymbol;
-            generateBoard();
-        }
+        while (winner == null) {
+
+                System.out.println("Please enter a number from the board layout displayed above to enter your " + playerOneSymbol + " symbol.");
+                int playerA = scan.nextInt();
+                board[playerA - 1] = playerOneSymbol;
+                winner = checkWinner();
+                checkNull(winner);
+                generateBoard();
+                if (winner != null) {
+                    break;
+                }
+    
+                System.out.println("Please enter a number from the board layout displayed above to enter your " + playerTwoSymbol + " symbol.");
+                int playerB = scan.nextInt();
+                board[playerB - 1] = playerTwoSymbol;
+                winner = checkWinner();
+                checkNull(winner);
+                generateBoard();
+                if (winner != null) {
+                    break;
+                }
+            }
+
+        scan.close();
         return false;
     }
 
-    // public void userSelection(int setPosition, String playerSymbol) {
-    //     String[] board = gameBoard();
-    //     board[setPosition] = playerSymbol;
-    // }
+    public String checkNull(String winner) {
+                    try {
+                if (winner.equalsIgnoreCase("draw")) {
+                    System.out.println("It's a draw! Thanks for playing!");
+                }
+                else {
+                    System.out.println("Congratulations! " + winner + "'s has won! Thanks for playing!");
+                }
+                
+            } catch (NullPointerException e) {
+                System.out.println("");;
+            }
+            return winner;
+    }
 
+    public String checkWinner() {
+        for (int i = 0; i < 8; i++) {
+            String line = null;
+
+            switch (i) {
+                case 0:
+                    line = board[0] + board[1] + board[2];
+                    break;
+                case 1:
+                    line = board[3] + board[4] + board[5];
+                    break;
+                case 2:
+                    line = board[6] + board[7] + board[8];
+                    break;
+                case 3:
+                    line = board[0] + board[3] + board[6];
+                    break;
+                case 4:
+                    line = board[1] + board[4] + board[7];
+                    break;
+                case 5:
+                    line = board[2] + board[5] + board[8];
+                    break;
+                case 6:
+                    line = board[0] + board[4] + board[8];
+                    break;
+                case 7:
+                    line = board[2] + board[4] + board[6];
+                    break;
+            }
+
+            //Current player playing X
+            if (line.equals("XXX")) {
+                return "X";
+            } 
+            //Current player playing O
+            else if (line.equals("OOO")) {
+                return "O";
+            }
+        }
+
+        for (int i = 0; i < 9; i++) {
+            if (Arrays.asList(board).contains(String.valueOf(i + 1))) {
+                break;
+            }
+            else if (i == 8) {
+                return "Draw";
+            }
+        }
+        return null;
+
+    }
 }
